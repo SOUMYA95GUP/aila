@@ -5,6 +5,8 @@
 5. pip install passlib[bcrypt]
 6. pip install pydantic-settings
 7. pip install python-multipart
+8. pip install boto3
+9. pip install jinja2
 
 ****command to run the service****
 ```uvicorn app.main:app --reload``` 
