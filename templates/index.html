@@ -8,10 +8,16 @@
 </head>
 <body>
     <div class="container">
+        <!-- Sidebar with colorful background -->
         <div class="sidebar">
-            <h2>DreamAI Aila</h2>
-            <p>your personal assistant</p>
+            <div class="sidebar-header">
+                <!-- Remove the img tag if not required, or replace it with a valid image path -->
+                <h2>DreamAI Aila</h2>
+                <p>your personal assistant</p>
+            </div>
         </div>
+
+        <!-- Chat Area -->
         <div class="chat-area">
             <div id="chat-box"></div>
             <form id="chat-form">
@@ -22,43 +28,47 @@
     </div>
 
     <script>
-        const chatBox = document.getElementById('chat-box');
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');  // Reference to the input field
 
-        document.getElementById('chat-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const input = document.getElementById('user-input').value;
+    document.getElementById('chat-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const input = userInput.value;
 
-            // Append user message
-            chatBox.innerHTML += `<div class="message user-message"><p>${input}</p></div>`;
-            scrollToBottom();
+        // Append user message to chat box
+        chatBox.innerHTML += `<div class="message user-message"><p>${input}</p></div>`;
+        scrollToBottom();
 
-            const loadingMessage = document.createElement('div');
-            loadingMessage.classList.add('message', 'bot-message');
+        const loadingMessage = document.createElement('div');
+        loadingMessage.classList.add('message', 'bot-message');
 
-            // Append a timestamp to prevent caching issues
-            loadingMessage.innerHTML = `<img src="/static/loading.gif?${new Date().getTime()}" class="loading-icon" alt="Loading...">`;
-            chatBox.appendChild(loadingMessage);
-            scrollToBottom();
+        // Use the cached loading icon
+        loadingMessage.innerHTML = `<img src="/static/message.gif" class="loading-icon" alt="Loading...">`;
+        chatBox.appendChild(loadingMessage);
+        scrollToBottom();
 
+        // Clear input field as soon as the request is submitted
+        userInput.value = '';
 
-            // Fetch bot response
-            const response = await fetch('/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: input })
-            });
-
-            const data = await response.json();
-
-            // Replace loading icon with actual response
-            loadingMessage.innerHTML = `<p>${data.reply}</p>`;
-            document.getElementById('user-input').value = ''; // Clear input field
-            scrollToBottom();
+        // Fetch bot response
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: input })
         });
 
-        function scrollToBottom() {
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    </script>
+        const data = await response.json();
+
+        // Replace loading icon with actual response
+        loadingMessage.innerHTML = `<p>${data.reply}</p>`;
+        scrollToBottom();
+    });
+
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+</script>
+
+
 </body>
 </html>

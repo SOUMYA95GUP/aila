@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from starlette.responses import FileResponse
 from pydantic import BaseModel
 from app.api.v1.endpoints import health,auth,secure_endpoint,query
 from app.core import bedrock_agent_client
@@ -15,6 +16,12 @@ app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(secure_endpoint.router, prefix="/secure", tags=["secure"])
 app.include_router(query.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/static/{path}")
+async def serve_static_file(path: str):
+    response = FileResponse(f"static/{path}")
+    response.headers["Cache-Control"] = "public, max-age=31536000"  # Cache for 1 year
+    return response
 
 # Initialize Bedrock client at startup
 @app.on_event("startup")
