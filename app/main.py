@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 from pydantic import BaseModel
-from app.api.v1.endpoints import health,auth,secure_endpoint,query
+from app.api.v1.endpoints import health,auth,secure_endpoint,query,leave
 from app.core import bedrock_agent_client
 
 app = FastAPI()
@@ -15,6 +15,7 @@ app.include_router(health.router)
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(secure_endpoint.router, prefix="/secure", tags=["secure"])
 app.include_router(query.router)
+app.include_router(leave.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/static/{path}")
