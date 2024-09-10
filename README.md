@@ -7,6 +7,9 @@
 7. pip install python-multipart
 8. pip install boto3
 9. pip install jinja2
+10. pip install sqlalchemy
+11. pip install pymysql
+12. pip install pydantic[email]
 
 ****command to run the service****
 ```uvicorn app.main:app --reload``` 

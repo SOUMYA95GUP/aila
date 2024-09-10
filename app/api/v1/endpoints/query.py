@@ -29,7 +29,7 @@ class Message(BaseModel):
     message: str
 
 @router.post("/chat")
-async def chat(message: Message):
+def chat(message: Message):
     if not bedrock_agent_client.bedrock_client:
         raise HTTPException(status_code=500, detail="Bedrock client not initialized")
     try:

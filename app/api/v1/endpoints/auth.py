@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import timedelta
 from app.core.security import verify_password, create_access_token, get_password_hash
 from app.schema.auth_schema import Token
-from app.repository.user_repository import get_user_by_username
+from app.repository.user_repository import UserRepository
 from app.core import security
 
 router = APIRouter()
@@ -16,7 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 # Login endpoint
 @router.post("/login", response_model=Token)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = await get_user_by_username(form_data.username)
+    user = await UserRepository.get_user_by_username(form_data.username)
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
