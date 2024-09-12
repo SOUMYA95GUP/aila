@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Include the API router
 app.include_router(health.router)
-app.include_router(auth.router, prefix="/auth", tags=["auth"])
+app.include_router(auth.router)
 app.include_router(secure_endpoint.router, prefix="/secure", tags=["secure"])
 app.include_router(query.router)
 app.include_router(leave.router)

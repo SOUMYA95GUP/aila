@@ -6,11 +6,12 @@ import os
 
 class DatabaseManager:
     def __init__(self):
-        self.DB_USER = os.getenv("DB_USER", "your_username")
-        self.DB_PASSWORD = os.getenv("DB_PASSWORD", "your_password")
-        self.DB_HOST = os.getenv("DB_HOST", "your_rds_host")
+        self.DB_USER = os.getenv("DB_USER", "admin")
+        self.DB_PASSWORD = os.getenv("DB_PASSWORD", "cDP2n7QB0nKNvvZuTZyF")
+
+        self.DB_HOST = os.getenv("DB_HOST", "aila.ct0gqieamrm2.us-east-1.rds.amazonaws.com")
         self.DB_PORT = os.getenv("DB_PORT", "3306")
-        self.DB_NAME = os.getenv("DB_NAME", "your_db_name")
+        self.DB_NAME = os.getenv("DB_NAME", "aila")
 
         self.SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 

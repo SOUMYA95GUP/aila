@@ -1,4 +1,5 @@
 # model/user_service.py
+from pyasn1.type.univ import Boolean
 from sqlalchemy import Column, Integer, String
 from app.core.database import db_manager
 
