@@ -10,6 +10,8 @@
 10. pip install sqlalchemy
 11. pip install pymysql
 12. pip install pydantic[email]
+13. pip install fastapi[all] python-jose[cryptography] passlib[bcrypt]
+
 
 ****command to run the service****
 ```uvicorn app.main:app --reload``` 

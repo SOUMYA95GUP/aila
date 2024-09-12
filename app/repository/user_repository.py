@@ -37,10 +37,7 @@ class UserRepository:
         return user
 
     def get_user_by_email(self, email_id: str):
-        return self.db.query(User).filter(User.email_id == email_id).first()
-
-    async def get_user_by_username(username: str) -> User | None:
-        # Replace this with your actual data source (e.g., SQL or DynamoDB)
-        hashed_password = get_password_hash("yourpassword")
-        user = User(user_name=username, hashed_password=hashed_password)
+        user = self.db.query(User).filter(User.email_id == email_id).first()
+        if user:
+            user.hashed_password = get_password_hash("password")
         return user
