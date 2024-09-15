@@ -6,7 +6,7 @@ from .security import SECRET_KEY, ALGORITHM, verify_password
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# Fake DB is for users (You will replace this with your DB layer)
+# Fake DB for users (You will replace this with your DB layer)
 fake_users_db = {
     "johndoe": {
         "username": "johndoe",
